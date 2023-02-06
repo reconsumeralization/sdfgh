@@ -1,0 +1,126 @@
+import random
+import time
+from typing import List, Dict
+
+def generate_shortcode_languages(languages: List[str]) -> Dict[str, str]:
+    """
+    Generate shortcodes for programming languages
+    :param languages: List of programming languages
+    :return: Dictionary of programming languages and their corresponding shortcodes
+    """
+    language_dict = {}
+    for language in languages:
+        words = language.split(" ")
+        shortcode = ""
+        for word in words:
+            if word in language_dict:
+                shortcode += language_dict[word]
+            else:
+                language_dict[word] = str(len(language_dict))
+                shortcode += language_dict[word]
+        language_dict[language] = shortcode
+    return language_dict
+
+def translate_shortcodes_to_languages(language_dict: Dict[str, str]) -> Dict[str, str]:
+    """
+    Translate shortcodes back to programming languages
+    :param language_dict: Dictionary of programming languages and their shortcodes
+    :return: Dictionary of shortcodes and their corresponding programming languages
+    """
+    reverse_language_dict = {}
+    for language, shortcode in language_dict.items():
+        reverse_language_dict[shortcode] = language
+    return reverse_language_dict
+
+def add_new_languages(languages: List[str], number_of_languages: int) -> List[str]:
+    """
+    Generate new programming languages
+    :param languages: List of current programming languages
+    :param number_of_languages: Number of new programming languages to generate
+    :return: List of programming languages including new programming languages
+    """
+    new_languages = ["Language " + str(i) for i in range(len(languages), len(languages) + number_of_languages)]
+    languages += new_languages
+    return languages
+
+def generate_random_languages(number_of_languages: int) -> List[str]:
+    """
+    Generate a list of random programming languages
+    :param number_of_languages: Number of programming languages to generate
+    :return: List of generated programming languages
+    """
+    languages = []
+    for i in range(number_of_languages):
+        languages.append("Language " + str(i))
+    random.shuffle(languages)
+    return languages
+
+def check_language_exists(language: str, language_dict: Dict[str, str]) -> str:
+    """
+    Check if a programming language already exists in the programming language dictionary
+    :param language: The programming language to check
+    :param language_dict: Dictionary of programming languages and their shortcodes
+    :return: Shortcode of the programming language if it exists, None otherwise
+    """
+    return language_dict.get(language)
+
+def delete_language(language: str, language_dict: Dict[str, str]) -> Dict[str, str]:
+    """
+    Delete a programming language from the programming language dictionary
+    :param language: The programming language to delete
+    :param language_dict: Dictionary of programming languages and their shortcodes
+    :return: Dictionary of programming languages and their shortcodes after deletion
+:return: Dictionary of programming languages and their shortcodes after deletion
+
+shortcode = language_dict.pop(language, None)
+if shortcode:
+    del language_dict[shortcode]
+return language_dict
+def save_output(file_name: str, data: str):
+"""
+Save data to a file
+:param file_name: Name of the file to save data to
+:param data: Data to save to file
+"""
+with open(file_name, "w") as file:
+file.write(data)
+
+if name == "main":
+# Generate a list of random programming languages
+languages = generate_random_languages(10)
+print("Original Programming Languages:")
+print(languages)
+
+# Generate shortcodes for the programming languages
+language_dict = generate_shortcode_languages(languages)
+print("Shortcodes:")
+print(language_dict)
+
+# Translate the shortcodes back to programming languages
+reverse_language_dict = translate_shortcodes_to_languages(language_dict)
+print("Translated Programming Languages:")
+print(reverse_language_dict)
+
+# Add new programming languages
+languages = add_new_languages(languages, 5)
+print("Programming Languages after Adding New Languages:")
+print(languages)
+
+# Check if a programming language exists
+language = "Language 0"
+shortcode = check_language_exists(language, language_dict)
+if shortcode:
+    print(f"{language} exists with shortcode {shortcode}")
+else:
+    print(f"{language} does not exist")
+
+# Delete a programming language
+language = "Language 0"
+language_dict = delete_language(language, language_dict)
+print("Programming Languages and their Shortcodes after Deletion:")
+print(language_dict)
+
+# Save outputs to file
+file_name = "output_" + str(int(time.time())) + ".txt"
+save_output(file_name, str(language_dict))
+print(f"Output saved to {file_name}
